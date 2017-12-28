@@ -23,8 +23,8 @@ import javax.mail.Store;
 public class GmailManager {
 
 
-	private String usuario_="jmgdtfg@gmail.com";
-	private String password_="tfg_pass";
+	private String usuario_="zzz";
+	private String password_="zzz";
 	private Properties props_ = new Properties();
 	private Session session_;
 	private Message[] bandejaEntrada_;
@@ -35,7 +35,7 @@ public class GmailManager {
 	//Constructor por defecto de la clase GmailManager
 	public GmailManager(){
 
-		build("gmail");//Por defecto conectará con el servidor de gmail
+		build("gmail");//Por defecto conectarÃ¡ con el servidor de gmail
 
 	};
 
@@ -51,7 +51,7 @@ public class GmailManager {
 
 	}
 
-	//Función que carga los datos de las variables privadas de la clase GmailManager
+	//FunciÃ³n que carga los datos de las variables privadas de la clase GmailManager
 	private void build(String servidor){
 		
 		FactoriaConfs fc = new FactoriaConfs();
@@ -82,7 +82,7 @@ public class GmailManager {
 			//Se obtienen los mensajes
 			this.bandejaEntrada_ = folder.getMessages();
 
-			//Folder debe quedarse abierto para poder acceder a la información.
+			//Folder debe quedarse abierto para poder acceder a la informaciÃ³n.
 			//folder.close(false);
 			//store.close();
 
@@ -135,12 +135,12 @@ public class GmailManager {
 
 
 
-	//Función para enviar un correo
+	//FunciÃ³n para enviar un correo
 	public void sendEmail(String listaDestinatarios, String asunto, String mensaje){
 
 		try{
 
-			//Se añaden los parámetros del mensaje
+			//Se aÃ±aden los parÃ¡metros del mensaje
 			Message message = new MimeMessage(session_);
 			message.setFrom(new InternetAddress(usuario_));
 			message.setRecipients(Message.RecipientType.TO,
@@ -157,7 +157,7 @@ public class GmailManager {
 		}
 
 	}
-	/*Esta función lee los mensajes de la bandeja de entrada
+	/*Esta funciÃ³n lee los mensajes de la bandeja de entrada
 	 * 	Nota: Se puede configurar en gmail para ver todos los correos o solo los de la sesion actual
 	 * 			*Habilitar IMAP para todos los mensajes (incluso si ya se han descargado)
 	 *			*Habilitar IMAP para los mensajes que se reciban a partir de ahora
@@ -172,7 +172,7 @@ public class GmailManager {
 	}
 
 
-	//Función que filtra los asuntos según una palabra pasada por parámetro.
+	//FunciÃ³n que filtra los asuntos segÃºn una palabra pasada por parÃ¡metro.
 
 	public Message[] filterBySubject(String palabra){
 
@@ -192,7 +192,7 @@ public class GmailManager {
 
 	}
 
-	//Función que filtra el remitente según una palabra pasada por parámetro.
+	//FunciÃ³n que filtra el remitente segÃºn una palabra pasada por parÃ¡metro.
 	public Message[] filterBySender(String palabra){
 
 		Folder folder = this.folder_;
@@ -211,7 +211,7 @@ public class GmailManager {
 
 	}
 
-	//Función que filtra el según una palabra pasada por parámetro.
+	//FunciÃ³n que filtra el segÃºn una palabra pasada por parÃ¡metro.
 	public Message[] filterByContent(String palabra){
 
 		Folder folder = this.folder_;
