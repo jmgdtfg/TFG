@@ -27,11 +27,11 @@ import twitter4j.conf.ConfigurationBuilder;
  *   - Descargar correo por un contenido en concreto
  *   - */
 public class TwitterManager {
-	//Información disponible en https://apps.twitter.com/
-	private  String ConsumerKey_ = "M0kEd4bb5Gbg94Khtj7YYPQNU";
-	private  String ConsumerSecret_ = "RXqdvmp0Noy0lc18WSD3SGmTkJDgvIPGEYXUxj81wxdV7ghqY3";
-	private  String AccessToken_ = "915865196706635776-coJoFOfuzfUTet8H3Bl48joI2eAbE3r";
-	private  String AccessTokenSecret_ = "RfWnEht5ZKoiF149iRDb0zedcXQ8sNshcbABYZ2AA6NlS";
+	//InformaciÃ³n disponible en https://apps.twitter.com/
+	private  String ConsumerKey_ = "-";
+	private  String ConsumerSecret_ = "-";
+	private  String AccessToken_ = "-";
+	private  String AccessTokenSecret_ = "-";
 	private  ConfigurationBuilder cb_ = new ConfigurationBuilder()
 			.setDebugEnabled(true)
 			.setOAuthConsumerKey(ConsumerKey_)
@@ -62,14 +62,14 @@ public class TwitterManager {
 				.setOAuthAccessTokenSecret(this.AccessTokenSecret_);
 		this.twitter_ = new TwitterFactory(cb_.build()).getInstance();
 	}
-	//Esta función muestra los tweets del timeline
+	//Esta funciÃ³n muestra los tweets del timeline
 	public List<Status> showTimeline() throws TwitterException{
 
 		List<Status> statuses = twitter_.getHomeTimeline();
 		return statuses;
 
 	}
-	//Esta función busca tweets en función de un hashtag
+	//Esta funciÃ³n busca tweets en funciÃ³n de un hashtag
 	public QueryResult searchByHashtag(String hashtag) throws TwitterException{
 
 		Query query = new Query('#'+hashtag);
@@ -79,7 +79,7 @@ public class TwitterManager {
 
 	}
 	/*
-	 * Esta función filtra tweets según una determinada palabra. Estos tweets no tienen por qué
+	 * Esta funciÃ³n filtra tweets segÃºn una determinada palabra. Estos tweets no tienen por quÃ©
 	 * estar relacionados con el timeline del usuario.
 	 */
 	public QueryResult searchByWord(String palabra) throws TwitterException{
@@ -90,7 +90,7 @@ public class TwitterManager {
 		return result;
 	}
 	
-	//Función para obtener los trendings topics en uun determinado momento.
+	//FunciÃ³n para obtener los trendings topics en uun determinado momento.
 	public Trends getTrendingTopics() throws TwitterException{
 		
 		Trends trends = twitter_.getPlaceTrends(1); //Con el valor 1 devuelve los TT a nivel mundial.
