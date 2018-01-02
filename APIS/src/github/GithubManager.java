@@ -10,9 +10,9 @@ import org.eclipse.egit.github.core.service.UserService;
 
 
 public class GithubManager {
-	private String token_="b62f000ea3190042feeb58730ad10097322353d1";
-	private String user_="jmgdtfg@gmail.com";
-	private String password_="tfg_pass3";
+	private String token_={TOKEN};
+	private String user_={USUARIO};
+	private String password_={PASS};
 
 	//Constructor parametrizado de la clase GithubManager
 	public GithubManager(String user,String password, String token){
@@ -45,8 +45,8 @@ public class GithubManager {
 	}
 	
 	/*
-	 * Función que se encarga de crear un nuevo respositorio
-	 * Devuelve true si se crea con éxito
+	 * FunciÃ³n que se encarga de crear un nuevo respositorio
+	 * Devuelve true si se crea con Ã©xito
 	 * Devuelve false si el repositorio ya existe o no se pudo crear
 	 * */
 	public boolean createRepository(String name, String language, String description) throws IOException {
