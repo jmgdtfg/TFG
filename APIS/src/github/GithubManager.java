@@ -27,7 +27,7 @@ public class GithubManager {
 	}
 
 
-
+	/*
 	public void test() throws IOException{
 	    GitHubClient client = new GitHubClient();
 	    client.setOAuth2Token(token_);
@@ -42,7 +42,7 @@ public class GithubManager {
 	    }
 
 
-	}
+	}*/
 	
 	/*
 	 * Función que se encarga de crear un nuevo respositorio
