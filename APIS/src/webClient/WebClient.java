@@ -37,7 +37,7 @@ public class WebClient {
 	*/
 	
 	
-	public void GET(String url, String type) throws ClientProtocolException, IOException{
+	public void get(String url, String type) throws ClientProtocolException, IOException{
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
@@ -64,7 +64,7 @@ public class WebClient {
 	*/
 
 
-	public void POST(String url, String data,String type) throws ClientProtocolException, IOException {
+	public void post(String url, String data,String type) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost request = new HttpPost(url);
@@ -96,7 +96,7 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 
-	public void PUT( String url, String data, String type) throws IOException {
+	public void put( String url, String data, String type) throws IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPut request = new HttpPut(url);
@@ -127,7 +127,7 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 
-	public void DELETE(String url, String type) throws ClientProtocolException, IOException {
+	public void delete(String url, String type) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpDelete request = new HttpDelete(url);
@@ -154,7 +154,7 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 	
-	public void HEAD(String url, String type) throws IOException {
+	public void head(String url, String type) throws IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpHead request = new HttpHead(url);
@@ -182,7 +182,7 @@ public class WebClient {
 	Cacheable						No
 	Allowed in HTML forms			No
 	*/
-	public void PATCH(String url, String data,String type) throws ClientProtocolException, IOException {
+	public void patch(String url, String data,String type) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPatch request = new HttpPatch(url);
@@ -213,7 +213,7 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 	
-	public void OPTIONS(String url)throws ClientProtocolException, IOException{
+	public void options(String url)throws ClientProtocolException, IOException{
 		HttpClient client = HttpClientBuilder.create().build();
 
 				HttpOptions request = new HttpOptions(url);
