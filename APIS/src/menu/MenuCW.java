@@ -41,38 +41,38 @@ public class MenuCW {
 			switch (opcion){
 			case 1:
 				
-				cw.GET(url,"aplication/xml");
+				cw.get(url,"aplication/xml");
 				break;
 			case 2:
 
-				cw.POST(url,"<h1>prueba<h1>","aplication/xml");
+				cw.post(url,"<h1>prueba<h1>","aplication/xml");
 
 
 				break;
 			case 3:
-				cw.PUT(url, "<h1>prueba<h1>","text/html");
+				cw.put(url, "<h1>prueba<h1>","text/html");
 				break;
 			case 4: 
 
 				
-				cw.DELETE(url,"aplication/json");
+				cw.delete(url,"aplication/json");
 
 				break;
 			case 5:
 
 				
-				cw.HEAD(url,"aplication/json");
+				cw.head(url,"aplication/json");
 
 				break;
 
 			case 6:
 
-				cw.OPTIONS(url);
+				cw.options(url);
 
 				break;
 			case 7:
 
-				cw.PATCH(url,"<h1>prueba<h1>","aplication/xml");
+				cw.patch(url,"<h1>prueba<h1>","aplication/xml");
 
 				break;
 			case 8:
