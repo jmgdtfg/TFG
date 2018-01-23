@@ -18,9 +18,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 
 
 public class GithubManager {
-	private String token_="b62f000ea3190042feeb58730ad10097322353d1";
-	private String user_="jmgdtfg@gmail.com";
-	private String password_="tfg_pass3";
+	private String token_={TOKEN};
+	private String user_={USER};
+	private String password_={PASSWORD};
 
 	//Constructor parametrizado de la clase GithubManager
 	public GithubManager(String user,String password, String token){
@@ -36,8 +36,8 @@ public class GithubManager {
 
 
 	/*
-	 * Funci髇 que se encarga de crear un nuevo respositorio
-	 * Devuelve true si se crea con 閤ito
+	 * Funci贸n que se encarga de crear un nuevo respositorio
+	 * Devuelve true si se crea con 茅xito
 	 * Devuelve false si el repositorio ya existe o no se pudo crear
 	 * */
 	public boolean createRepository(String name, String language, String description) throws IOException {
@@ -55,8 +55,8 @@ public class GithubManager {
 		return true;
 	}
 	/*
-	 * Funci髇 que se encarga de crear un nuevo Gist
-	 * Devuelve true si se crea con 閤ito
+	 * Funci贸n que se encarga de crear un nuevo Gist
+	 * Devuelve true si se crea con 茅xito
 	 * Devuelve false si el repositorio ya existe o no se pudo crear
 	 * */
 	public boolean createGist(String description, boolean isPublic, String content, String name){
@@ -72,7 +72,7 @@ public class GithubManager {
 		return true;
 	}
 
-	//Funci髇 que se encarga obtener nuestros propios repositorios
+	//Funci贸n que se encarga obtener nuestros propios repositorios
 
 	public void getOwnRepos() throws IOException{
 
@@ -89,7 +89,7 @@ public class GithubManager {
 	}
 
 	/*
-	 * Funci髇 que se encarga de clonar repositorios
+	 * Funci贸n que se encarga de clonar repositorios
 	 * @param 1 => Url del repositorio a clonar
 	 * @param 2 => Directorio local en el que se clona el repositorio
 	 * */
@@ -112,9 +112,9 @@ public class GithubManager {
 	}
 
 	/*
-	 * Funci髇 que se encarga de buscar repositorios
+	 * Funci贸n que se encarga de buscar repositorios
 	 * @param 1 => Palabra clave para la busqueda (Ej: slack, telegram, interface...)
-	 * @param 2 => Lenguaje de programaci髇 que buscamos
+	 * @param 2 => Lenguaje de programaci贸n que buscamos
 	 * */
 	public void searchRepos(String keyword, String language) throws IOException {
 
