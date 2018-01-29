@@ -58,7 +58,7 @@ public class MenuSlack {
 				break;
 			case 5:
 
-				sm.sendDirectMessageToAUser("jmgd_3@outlook.com","hola");
+				sm.sendDirectMessageToAUser("correo@uco.es","hola");
 
 				break;
 
