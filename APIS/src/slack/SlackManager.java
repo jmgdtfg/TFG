@@ -23,11 +23,11 @@ import com.ullink.slack.simpleslackapi.replies.SlackChannelReply;
 
 public class SlackManager {
 	//Token del bot
-	private String tokenBot_ = "xoxb-302661515216-wubP5e1ImYVEoMk4MWKDWiJI";
+	private String tokenBot_ = {tokenBot}
 	//Instancia de Slack necesaria para usar el Webhook service
 	private Slack slack_ = Slack.getInstance();
 	//URL ( que sirve de token ) del webhook service
-	private String url_="https://hooks.slack.com/services/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";
+	private String url_={urlWebhook}
 	//Session del bot ( simple slack api )
 	private SlackSession slackSession_ = SlackSessionFactory.createWebSocketSlackSession(tokenBot_);
 
@@ -51,7 +51,7 @@ public class SlackManager {
 	
 	
 	
-	//Funci髇 que permite obtener una lista de los canales asociados a la sesi髇 de slack
+	//Funci贸n que permite obtener una lista de los canales asociados a la sesi贸n de slack
 	public void getChannels() throws IOException{
 
 
@@ -66,7 +66,7 @@ public class SlackManager {
 		}
 	}
 	
-	//Funci髇 que permite obtener una lista de los usuarios asociados a la sesi髇 de slack
+	//Funci贸n que permite obtener una lista de los usuarios asociados a la sesi贸n de slack
 	public void getUsers() throws IOException{
 	
 		List<String> channels = slackSession_.getUsers()
@@ -78,13 +78,13 @@ public class SlackManager {
 		}
 	}
 	
-    /*Funci髇 que permite enviar un mensaje directo a un usuario segun su correo
+    /*Funci贸n que permite enviar un mensaje directo a un usuario segun su correo
      * Parametro 1: Email
      * Parametro 2: Texto a enviar
      * */
     public void sendDirectMessageToAUser(String email, String text)    {
 
-        //obtiene el usuario seg鷑 su mail
+        //obtiene el usuario seg煤n su mail
         SlackUser user = slackSession_.findUserByEmail(email);
 
         //Abrimos un nuevo canal para comunicarnos con dicho usuario
@@ -93,7 +93,7 @@ public class SlackManager {
 
         slackSession_.sendMessage(channel,text, null);
     }
-    /*Funci髇 que permite enviar un mensaje a un canal. El bot debe haber sido invitado al canal.
+    /*Funci贸n que permite enviar un mensaje a un canal. El bot debe haber sido invitado al canal.
      * Parametro 1: Texto a enviar
      * Parametro 2: Canal al que se envia
      * Parametro 3: Nombre del usuario que lo envia
@@ -113,7 +113,7 @@ public class SlackManager {
         slackSession_.sendMessage(channel, preparedMessage);
     }
 
-    /*Funci髇 que permite enviar un mensaje a un canal. Utilizando webhook service
+    /*Funci贸n que permite enviar un mensaje a un canal. Utilizando webhook service
      * Parametro 1: Texto a enviar
      * Parametro 2: Canal al que se envia
      * Parametro 3: Nombre del usuario que lo envia ??
