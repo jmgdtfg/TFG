@@ -52,31 +52,32 @@ public class SlackManager {
 
 
 
-	//Función que permite obtener una lista de los canales asociados a la sesión de slack
-	public void getChannels() throws IOException{
+		//Función que permite obtener una lista de los canales asociados a la sesión de slack
+	public List<String> getChannels() throws IOException{
 
 
 		List<String> channels = slackSession_.getChannels()
 				.stream()
 				.map(c ->c.getName())
 				.collect(Collectors.toList());
-
-		for (String channel : channels) {
+		return channels;
+/*		for (String channel : channels) {
 			System.out.println(channel);
 
-		}
+		}*/
 	}
 
 	//Función que permite obtener una lista de los usuarios asociados a la sesión de slack
-	public void getUsers() throws IOException{
+	public List<String> getUsers() throws IOException{
 
 		List<String> channels = slackSession_.getUsers()
 				.stream()
 				.map(c ->c.getUserName())
 				.collect(Collectors.toList());
-		for (String channel : channels) {
+		return channels;
+/*		for (String channel : channels) {
 			System.out.println(channel);
-		}
+		}*/
 	}
 
 	/*Función que permite enviar un mensaje directo a un usuario segun su correo
