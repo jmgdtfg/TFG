@@ -1,10 +1,13 @@
 package webClient;
 
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -37,22 +40,31 @@ public class WebClient {
 	*/
 	
 	
-	public void get(String url, String type) throws ClientProtocolException, IOException{
+	public HttpResponse get(String url, Map<String, String> header) throws ClientProtocolException, IOException{
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
-
+		
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 	}
 
-	
 	/*
 	Método POST:
 	Request has body				Yes
@@ -64,7 +76,7 @@ public class WebClient {
 	*/
 
 
-	public void post(String url, String data,String type) throws ClientProtocolException, IOException {
+	public HttpResponse post(String url, String data,Map<String, String> header) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost request = new HttpPost(url);
@@ -74,14 +86,24 @@ public class WebClient {
 		request.setEntity(entity);
 
 
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
 
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 	}
 	
@@ -96,24 +118,34 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 
-	public void put( String url, String data, String type) throws IOException {
+	public HttpResponse put( String url, String data, Map<String, String> header) throws IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPut request = new HttpPut(url);
-		StringEntity entity =new StringEntity(data);
 
 
-		entity.setContentType(type);
+		StringEntity entity = new StringEntity(data);
+		request.setEntity(entity);
 
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
 		request.setEntity(entity);
 
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 	}
 
@@ -127,19 +159,29 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 
-	public void delete(String url, String type) throws ClientProtocolException, IOException {
+	public HttpResponse delete(String url, Map<String, String> header) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpDelete request = new HttpDelete(url);
-		request.addHeader("Accept", type);
+		
 
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 	}
 
@@ -154,21 +196,30 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 	
-	public void head(String url, String type) throws IOException {
+	public HttpResponse head(String url, Map<String, String> header) throws IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpHead request = new HttpHead(url);
 
 
-		request.addHeader("Accept", type);
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
 
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 
 	}
@@ -182,7 +233,7 @@ public class WebClient {
 	Cacheable						No
 	Allowed in HTML forms			No
 	*/
-	public void patch(String url, String data,String type) throws ClientProtocolException, IOException {
+	public HttpResponse patch(String url, String data, Map<String, String> header) throws ClientProtocolException, IOException {
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPatch request = new HttpPatch(url);
@@ -192,14 +243,23 @@ public class WebClient {
 		request.setEntity(entity);
 
 
-		request.addHeader("content-type", type);
-		request.addHeader("Accept", "*/*");
-		request.addHeader("Accept-Encoding", "gzip,deflate,sdch");
-		request.addHeader("Accept-Language", "en-US,en;q=0.8");
-
+		//Se rellena el header con el parámetro Map header. EN caso de que uno de
+		//sus campos estén vacíos se rellena con un valor por defecto.
+		request.addHeader("content-type",
+				header.getOrDefault("content-type", "aplication/html"));
+		request.addHeader("Accept", 
+				header.getOrDefault("Accept","*/*"));
+		request.addHeader("Accept-Encoding", 
+				header.getOrDefault("Accept-Enconding","gzip,deflate,sdch"));
+		request.addHeader("Accept-Language", 
+				header.getOrDefault("Accept-Language", "en-US,en;q=0.8"));
+		request.addHeader("Accept-Charset", 
+				header.getOrDefault("Accept-Charset", "UTF-8"));
+		request.addHeader("Authorization",
+				header.getOrDefault("Authorization", "null"));
 
 		HttpResponse response = client.execute(request);
-		this.responseReader(response);
+		return response;
 
 	}
 	
@@ -213,16 +273,17 @@ public class WebClient {
 	Allowed in HTML forms			No
 	*/
 	
-	public void options(String url)throws ClientProtocolException, IOException{
+	public List<Header> options(String url)throws ClientProtocolException, IOException{
 		HttpClient client = HttpClientBuilder.create().build();
 
 				HttpOptions request = new HttpOptions(url);
 				HttpResponse response = client.execute(request);
 				
-				List<Header> httpHeaders = Arrays.asList(response.getAllHeaders());        
-			    for (Header header : httpHeaders) {
+				List<Header> httpHeaders = Arrays.asList(response.getAllHeaders());
+				return httpHeaders;
+/*			    for (Header header : httpHeaders) {
 			        System.out.println(header.getName() + "," + header.getValue());
-			    }
+			    }*/
 			
 			}
 	
