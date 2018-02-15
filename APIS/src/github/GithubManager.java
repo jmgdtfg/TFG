@@ -1,12 +1,17 @@
 package github;
-
+//Cambiar search repost que devuelva lista de resultados
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.egit.github.core.Repository;
+
 import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.GistService;
@@ -17,10 +22,12 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 
 
+
 public class GithubManager {
-	private String token_={TOKEN};
-	private String user_={USER};
-	private String password_={PASSWORD};
+	private String token_="";
+	private String user_="";
+	private String password_="";
+	private File file_ = null;
 
 	//Constructor parametrizado de la clase GithubManager
 	public GithubManager(String user,String password, String token){
@@ -36,8 +43,8 @@ public class GithubManager {
 
 
 	/*
-	 * Funci贸n que se encarga de crear un nuevo respositorio
-	 * Devuelve true si se crea con 茅xito
+	 * Funci髇 que se encarga de crear un nuevo respositorio
+	 * Devuelve true si se crea con 閤ito
 	 * Devuelve false si el repositorio ya existe o no se pudo crear
 	 * */
 	public boolean createRepository(String name, String language, String description) throws IOException {
@@ -55,8 +62,8 @@ public class GithubManager {
 		return true;
 	}
 	/*
-	 * Funci贸n que se encarga de crear un nuevo Gist
-	 * Devuelve true si se crea con 茅xito
+	 * Funci髇 que se encarga de crear un nuevo Gist
+	 * Devuelve true si se crea con 閤ito
 	 * Devuelve false si el repositorio ya existe o no se pudo crear
 	 * */
 	public boolean createGist(String description, boolean isPublic, String content, String name){
@@ -72,24 +79,24 @@ public class GithubManager {
 		return true;
 	}
 
-	//Funci贸n que se encarga obtener nuestros propios repositorios
+	//Funci髇 que se encarga obtener nuestros propios repositorios
 
-	public void getOwnRepos() throws IOException{
+	public List<org.eclipse.egit.github.core.Repository> getOwnRepos() throws IOException{
 
 		GitHubClient client = new GitHubClient();
 		client.setCredentials(user_,password_);
 		RepositoryService service = new RepositoryService(client);
-		List<Repository> repos = service.getRepositories();
-
-		for (Repository repo : repos) {
-			System.out.println(repo.getId());
+		List<org.eclipse.egit.github.core.Repository> repos = service.getRepositories();
+		return repos;
+/*		for (Repository repo : repos) {
+			//System.out.println(repo.getId());
 			System.out.println(repo.getName());
-			System.out.println(repo.getMasterBranch());
-		}
+			//System.out.println(repo.getMasterBranch());
+		}*/
 	}
 
 	/*
-	 * Funci贸n que se encarga de clonar repositorios
+	 * Funci髇 que se encarga de clonar repositorios
 	 * @param 1 => Url del repositorio a clonar
 	 * @param 2 => Directorio local en el que se clona el repositorio
 	 * */
@@ -101,22 +108,45 @@ public class GithubManager {
 			return null;
 		}
 		else{
-			CloneCommand clone = Git.cloneRepository()	
+			CloneCommand clone = Git.cloneRepository()		
 					.setURI(url)
 					.setDirectory(descarga);
-
+			
 			try (Git repositorio = clone.call()) {
-				return repositorio.getRepository().getWorkTree();
+				file_=repositorio.getRepository().getDirectory();
+				return file_;//.getWorkTree();
 			}
 		}
 	}
+	//Funci髇 que lista todos los archivos de un directorio
+	public void getDirectoryTree(String url) throws IOException{
+		Files.walk(Paths.get(url)).forEach(ruta-> {
+		    if (Files.isRegularFile(ruta)){
+		        System.out.println(ruta);
+		    }
+		});
+	}
+	/*
+	 * Funci髇 que copia en una determinada ruta un archivo cuya ruta 
+	 * ha sido especificada por par醡etro.
+	 * */
+	public void getFile(String path){
+        Path initPath = FileSystems.getDefault().getPath(path);
+        Path finalPath = FileSystems.getDefault().getPath("");
+
+        try {
+            Files.move(initPath, finalPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+	}
 
 	/*
-	 * Funci贸n que se encarga de buscar repositorios
+	 * Funci髇 que se encarga de buscar repositorios
 	 * @param 1 => Palabra clave para la busqueda (Ej: slack, telegram, interface...)
-	 * @param 2 => Lenguaje de programaci贸n que buscamos
+	 * @param 2 => Lenguaje de programaci髇 que buscamos
 	 * */
-	public void searchRepos(String keyword, String language) throws IOException {
+	public List<SearchRepository> searchRepos(String keyword, String language) throws IOException {
 
 		Map<String, String> searchQuery = new HashMap<String, String>();
 		GitHubClient client = new GitHubClient();
@@ -126,13 +156,13 @@ public class GithubManager {
 		searchQuery.put("language", language);
 
 		List<SearchRepository> searchRes = service.searchRepositories(searchQuery);
-
-		for(SearchRepository srs : searchRes){
+		return searchRes;
+/*		for(SearchRepository srs : searchRes){
 			System.out.println(srs.getOwner().toString());
 			System.out.println(srs.getName().toString());
 			System.out.println(srs.getCreatedAt().toString());
 			System.out.println("-	-	-	-	-");
-		}
+		}*/
 	}
 
 }
