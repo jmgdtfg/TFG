@@ -1,8 +1,8 @@
 /* 
  * Este proceso se encarga de obtener un numero relevante de tweets de un determinado
  * hashtag. Después selecciona el top 5 de tweets más retuiteados y el top 5 de tweets
- * con más veces marcados como favoritos. Por último envía los resultados a una 
- * determinada cuenta de email
+ * con más veces marcados como favoritos(equivalente a me gusta). Por último envía los 
+ * resultados a una  determinada cuenta de email
  * - Selecciona los del último mes
  */
 
@@ -49,20 +49,20 @@ public class Process1 {
 		//Se ordenan los tweets de más a menos Favoritos
 		tweets.sort(Comparator.comparing(Status::getFavoriteCount).reversed());
 		topFavorites_ = tweets;
-		
+
 		//Elaboración del mensaje
 		String message = "TOP 5: Tweets con el hashtag #"+hashtag_+" mas retwiteados\n\n";
 		
 		for (int i = 0; i < 5 ; i++){
 			int number = i + 1;
-			message = message.concat(number+") "+topRetweets_.get(i).getText()+"\n");
+			message = message.concat(number+") "+topRetweets_.get(i).getUser().getName()+ ": " +topRetweets_.get(i).getText()+"\n");
 		}
 		message = message.concat("------------------------------------------------\n");
-		message = message.concat("TOP 5: Tweets con el hashtag #"+hashtag_+" más veces marcados como favoritos\n\n");
+		message = message.concat("TOP 5: Tweets con el hashtag #"+hashtag_+" con más me gusta\n\n");
 		
 		for (int i = 0; i < 5 ; i++){
 			int number = i + 1;
-			message = message.concat(number+") "+topFavorites_.get(i).getText()+"\n");
+			message = message.concat(number+") "+topRetweets_.get(i).getUser().getName()+ ": " +topFavorites_.get(i).getText()+"\n");
 		}
 		
 		//Se envía (destinatarios, asunto , mensaje )
