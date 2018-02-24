@@ -1,5 +1,7 @@
 package twitter;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 //librerias necesarias para streamTweets
 //import twitter4j.FilterQuery;
@@ -27,11 +29,11 @@ import twitter4j.conf.ConfigurationBuilder;
  *   - Descargar correo por un contenido en concreto
  *   - */
 public class TwitterManager {
-	//InformaciÃ³n disponible en https://apps.twitter.com/
-	private  String ConsumerKey_ = "-";
-	private  String ConsumerSecret_ = "-";
-	private  String AccessToken_ = "-";
-	private  String AccessTokenSecret_ = "-";
+	//Información disponible en https://apps.twitter.com/
+	private  String ConsumerKey_ = "";
+	private  String ConsumerSecret_ = "";
+	private  String AccessToken_ = "";
+	private  String AccessTokenSecret_ = "";
 	private  ConfigurationBuilder cb_ = new ConfigurationBuilder()
 			.setDebugEnabled(true)
 			.setOAuthConsumerKey(ConsumerKey_)
@@ -62,24 +64,31 @@ public class TwitterManager {
 				.setOAuthAccessTokenSecret(this.AccessTokenSecret_);
 		this.twitter_ = new TwitterFactory(cb_.build()).getInstance();
 	}
-	//Esta funciÃ³n muestra los tweets del timeline
+	//Esta función muestra los tweets del timeline
 	public List<Status> showTimeline() throws TwitterException{
 
 		List<Status> statuses = twitter_.getHomeTimeline();
 		return statuses;
 
 	}
-	//Esta funciÃ³n busca tweets en funciÃ³n de un hashtag
+	//Esta función busca tweets en función de un hashtag
 	public QueryResult searchByHashtag(String hashtag) throws TwitterException{
-
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -30);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String format = format1.format(calendar.getTime());
+		
 		Query query = new Query('#'+hashtag);
-		query.count(10); //Limite de 10 resultados de la busqueda 
+		
+		query.setSince(format);						//Usa los tweets del último mes
+		query.resultType(Query.ResultType.popular);	//Filtro por tweets populares
+		query.count(100); 							//Limite de 100 resultados de la busqueda 
 		QueryResult result = twitter_.search(query);
 		return result;
 
 	}
 	/*
-	 * Esta funciÃ³n filtra tweets segÃºn una determinada palabra. Estos tweets no tienen por quÃ©
+	 * Esta función filtra tweets según una determinada palabra. Estos tweets no tienen por qué
 	 * estar relacionados con el timeline del usuario.
 	 */
 	public QueryResult searchByWord(String palabra) throws TwitterException{
@@ -90,7 +99,7 @@ public class TwitterManager {
 		return result;
 	}
 	
-	//FunciÃ³n para obtener los trendings topics en uun determinado momento.
+	//Función para obtener los trendings topics en uun determinado momento.
 	public Trends getTrendingTopics() throws TwitterException{
 		
 		Trends trends = twitter_.getPlaceTrends(1); //Con el valor 1 devuelve los TT a nivel mundial.
