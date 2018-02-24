@@ -1,4 +1,4 @@
-package gmail;
+package mail;
 
 import java.util.Properties;
 /*La clase FactoriaConfs sirve elegir el servidor del que se recibirá la

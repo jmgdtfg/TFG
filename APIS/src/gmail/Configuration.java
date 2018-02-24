@@ -1,4 +1,4 @@
-package gmail;
+package mail;
 
 import java.util.Properties;
 //La clase Configuration contiene los valores de configuración comunes.

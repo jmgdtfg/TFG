@@ -1,4 +1,4 @@
-package gmail;
+package mail;
 
 import java.util.Properties;
 /*La clase ConfigurationHotmail coge los valores de configuracion comunes de
