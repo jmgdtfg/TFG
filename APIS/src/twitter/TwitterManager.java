@@ -1,8 +1,11 @@
 package twitter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import twitter4j.Paging;
 //librerias necesarias para streamTweets
 //import twitter4j.FilterQuery;
 //import twitter4j.TwitterStream;
@@ -47,11 +50,11 @@ public class TwitterManager {
 	public TwitterManager() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	//Constructor parametrizado de la clase TwitterManager
-	
+
 	public TwitterManager(String ConsumerKey,String ConsumerSecret,String AccessToken,String AccessTokenSecret){
-		
+
 		this.ConsumerKey_ = ConsumerKey;
 		this.ConsumerSecret_ = ConsumerSecret;
 		this.AccessToken_ = AccessToken;
@@ -64,25 +67,42 @@ public class TwitterManager {
 				.setOAuthAccessTokenSecret(this.AccessTokenSecret_);
 		this.twitter_ = new TwitterFactory(cb_.build()).getInstance();
 	}
+	//Esta función muestra los tweets del timeline de otro usuario
+	public List<Status> showUserTimeline(String user) throws TwitterException{
+		List<Status> statuses = new ArrayList<Status>();
+		for (int i=1; i<=6; i++){
+			Paging p = new Paging(i,200);
+			statuses.addAll(twitter_.getUserTimeline(user,p));
+		}
+
+		return statuses;
+	}
+
 	//Esta función muestra los tweets del timeline
 	public List<Status> showTimeline() throws TwitterException{
 
-		List<Status> statuses = twitter_.getHomeTimeline();
+		List<Status> statuses = new ArrayList<Status>();
+		for (int i=1; i<=6; i++){
+			Paging p = new Paging(i,200);
+			statuses.addAll(twitter_.getHomeTimeline(p));
+		}
+
 		return statuses;
 
 	}
 	//Esta función busca tweets en función de un hashtag
-	public QueryResult searchByHashtag(String hashtag) throws TwitterException{
+	public QueryResult searchByHashtag(String hashtag, int days, int results) throws TwitterException{
+		
 		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DATE, -30);
+		calendar.add(Calendar.DATE, -days);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String format = format1.format(calendar.getTime());
-		
+
 		Query query = new Query('#'+hashtag);
-		
+
 		query.setSince(format);						//Usa los tweets del último mes
 		query.resultType(Query.ResultType.popular);	//Filtro por tweets populares
-		query.count(100); 							//Limite de 100 resultados de la busqueda 
+		query.count(results); 						//Limite de 100 resultados de la busqueda 
 		QueryResult result = twitter_.search(query);
 		return result;
 
@@ -91,17 +111,24 @@ public class TwitterManager {
 	 * Esta función filtra tweets según una determinada palabra. Estos tweets no tienen por qué
 	 * estar relacionados con el timeline del usuario.
 	 */
-	public QueryResult searchByWord(String palabra) throws TwitterException{
+	public QueryResult searchByWord(String palabra, int days, int results) throws TwitterException{
 
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -days);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String format = format1.format(calendar.getTime());
+		
 		Query query = new Query(palabra);
-		query.count(10); //Limite de 10 resultados de la busqueda 
+		query.setSince(format);	
+		query.resultType(Query.ResultType.popular);
+		query.count(results); 
 		QueryResult result = twitter_.search(query);
 		return result;
 	}
-	
+
 	//Función para obtener los trendings topics en uun determinado momento.
 	public Trends getTrendingTopics() throws TwitterException{
-		
+
 		Trends trends = twitter_.getPlaceTrends(1); //Con el valor 1 devuelve los TT a nivel mundial.
 		//trends.getLocation();
 		return trends;
