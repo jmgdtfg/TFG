@@ -5,11 +5,12 @@ import net.aksingh.owmjapis.api.APIException;
 import net.aksingh.owmjapis.core.OWM;
 import net.aksingh.owmjapis.model.CurrentWeather;
 import net.aksingh.owmjapis.model.HourlyWeatherForecast;
+import net.aksingh.owmjapis.model.param.Weather;
 import net.aksingh.owmjapis.model.param.WeatherData;
 
 public class OpenWeatherMapManager {
 
-	private String token_ = {TOKEN};
+	private String token_ = "";
 	private OWM owm_ = new OWM(token_);
 	
 	//Constructor por defecto
@@ -18,6 +19,15 @@ public class OpenWeatherMapManager {
 	//Constructor parametrizado
 	public OpenWeatherMapManager(String token){
 		token_=token;
+	}
+	//Función que obtiene las condiciones climatológicas del lugar
+	public String getCondition(String city) throws APIException{
+		WeatherConditionsFactory wcf = new WeatherConditionsFactory();
+		CurrentWeather cwd = owm_.currentWeatherByCityName(city);
+		List<Weather> lw = cwd.component5();
+		Weather w = lw.get(0);
+		String condition = w.getDescription();
+		return wcf.getCondition(condition);
 	}
 	
 	//Función que devuelve la temperatura actual de una ciudad pasada por parámetro.
