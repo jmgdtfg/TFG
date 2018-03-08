@@ -1,6 +1,8 @@
 package spotify;
 
 import java.io.IOException;
+
+
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -9,6 +11,7 @@ import com.wrapper.spotify.model_objects.special.FeaturedPlaylists;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Artist;
 import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.model_objects.specification.Playlist;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import com.wrapper.spotify.model_objects.specification.Recommendations;
 import com.wrapper.spotify.model_objects.specification.Track;
@@ -16,16 +19,18 @@ import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import com.wrapper.spotify.requests.data.browse.GetListOfFeaturedPlaylistsRequest;
 import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchAlbumsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchArtistsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchPlaylistsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
 
+
 public class SpotifyManager {
 
 	private SpotifyApi spotifyApi_ = new SpotifyApi.Builder()
-			.setClientId(CLIENT_ID)
-			.setClientSecret(CLIENT_SECRET)
+			.setClientId("")
+			.setClientSecret("")
 			.build();
 
 	private ClientCredentialsRequest clientCredentialsRequest = spotifyApi_.clientCredentials()
@@ -84,7 +89,7 @@ public class SpotifyManager {
 			return null;
 		}
 	}
-	
+
 	//Función que busca artistas según un nombre y un país pasado por parámetro.
 	public Artist[] searchArtists(String name, CountryCode countryCode){
 		SearchArtistsRequest searchArtistsRequest = spotifyApi_.searchArtists(name)
@@ -101,12 +106,12 @@ public class SpotifyManager {
 			return null;
 		}
 	}
-	
+
 	//Función que busca playlists según un nombre y un país pasado por parámetro
 	public PlaylistSimplified[] searchPlaylist(String name,CountryCode countryCode){
 		SearchPlaylistsRequest searchPlaylitsRequest = spotifyApi_.searchPlaylists(name)
 				.market(countryCode)
-				.limit(10)
+				.limit(50)
 				.offset(0)
 				.build();
 		try{
@@ -147,7 +152,7 @@ public class SpotifyManager {
 			return null;
 		}
 	}
-	
+
 
 	//Función que obtiene las principales playlist según un determinado país pasado por parámetro
 	public Paging<PlaylistSimplified> getTopPlaylists(CountryCode countryCode){
@@ -167,6 +172,23 @@ public class SpotifyManager {
 		}
 
 	}
+
+	public Playlist getPlaylist(CountryCode countryCode, String userId, String playlistId){
+		GetPlaylistRequest getPlaylistRequest = spotifyApi_.getPlaylist(userId, playlistId)
+				.market(countryCode)
+				.build();
+		try {
+			final Playlist playlist = getPlaylistRequest.execute();
+
+			return playlist;
+		} catch (IOException | SpotifyWebApiException e) {
+			System.out.println("Errorr: " + e.getMessage());
+			return null;
+		}
+
+	}
+
+
 
 
 
